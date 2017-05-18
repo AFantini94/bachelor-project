@@ -7,6 +7,11 @@ router.post('/stream', function(req, res, next) {
   res.render('stream', { title: 'Stream' + JSON.stringify(req.body)});
 });
 
+router.get('/stream', function(req, res, next) {
+
+    res.render('stream', { title: 'Stream' + JSON.stringify(req.body)});
+});
+
 /* GET contentsource page. */
 router.get('/content', function(req, res, next) {
     res.render('contentsource', { title: 'Content' });

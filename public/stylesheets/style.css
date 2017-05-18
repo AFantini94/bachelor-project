@@ -6,3 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
+
+.article {
+  padding: 100px;
+  font-family: Damascus, sans-serif;
+}
