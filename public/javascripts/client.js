@@ -1,4 +1,11 @@
 // hootsuite
+function createFontAwesomeIconElement(icon) {
+    var iconElement = document.createElement('i');
+    iconElement.className = 'fa ' + icon;
+    iconElement.setAttribute('aria-hidden', 'true');
+
+    return iconElement;
+}
 
 function deleteAllChildNodes(root) {
     while (root.firstChild) {
@@ -52,6 +59,33 @@ function createArticleElement(article) {
         }
     });
     newArticle.appendChild(loadMoreBtn);
+
+    var buttonsContainer = document.createElement('div');
+    buttonsContainer.className = 'article-buttons-container';
+
+    var shareBtn = document.createElement('div');
+    shareBtn.className = 'share-btn';
+    shareBtn.appendChild(createFontAwesomeIconElement('fa-share-square-o'));
+    var shareLabel = document.createElement('span');
+    shareLabel.innerText = 'Share';
+    shareBtn.appendChild(shareLabel);
+    shareBtn.addEventListener('click', function () {
+        hsp.composeMessage(article.title + ' ' + article.url, {shortenLinks: true});
+    });
+    buttonsContainer.appendChild(shareBtn);
+
+    var deleteBtn = document.createElement('div');
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.appendChild(createFontAwesomeIconElement('fa-trash-o'));
+    var deleteLabel = document.createElement('span');
+    deleteLabel.innerText = 'Delete';
+    deleteBtn.appendChild(deleteLabel);
+    deleteBtn.addEventListener('click', function () {
+        newArticle.parentNode.removeChild(newArticle);
+    });
+    buttonsContainer.appendChild(deleteBtn);
+
+    newArticle.appendChild(buttonsContainer);
 
     return newArticle;
 }

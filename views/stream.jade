@@ -2,10 +2,12 @@ doctype html
 html
   head
     title= title
+    link(rel='stylesheet', href='/libs/font-awesome-4.7.0/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
 
   body
     script(src='https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js')
+    script(src='/libs/sha512/sha512.min.js')
     script(src='/javascripts/client.js')
     h1= title
     p Welcome to #{title}
