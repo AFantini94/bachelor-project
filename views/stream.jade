@@ -18,7 +18,12 @@ html
                 input(type="text" placeholder="Your Newsriver API token")#token-text-input
                 button(type="button")#login-btn Login
         button(type="button" onclick="hsp.saveData(null)") RESET TOKEN
-        h1= title
-        p Welcome to #{title}
-        p#risposta Qua la risposta
+
+        div#query-container
+            div.field-container
+                input.field(type='text' value='Field to be searched')
+                input.phrase(type='text' value='Phrase to search')
+                button.add(onclick='addField()') +
+        button#send-query(onclick='queryBuilder()') Send Query
+
         div#articles-container

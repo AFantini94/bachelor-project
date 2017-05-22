@@ -107,18 +107,17 @@ window.onload = function () {
                 hsp.saveData({newsriverToken: token});
 
                 tokenContainer.classList.add('token-container-hidden');
-
-                loadNews(token);
             });
 
             tokenContainer.classList.remove('token-container-hidden')
-        } else {
-            loadNews(data.newsriverToken);
         }
+        // } else {
+        //     loadNews(data.newsriverToken);
+        // }
     });
 };
 
-function loadNews(token) {
+function loadNews(query, token) {
     // ajax
 
     var xhttp = new XMLHttpRequest();
@@ -129,14 +128,67 @@ function loadNews(token) {
             var articlesContainer = document.getElementById('articles-container');
             deleteAllChildNodes(articlesContainer);
 
-            console.log(articlesContainer);
-
             articles.forEach(function (article) {
                 articlesContainer.appendChild(createArticleElement(article));
             });
         }
     };
-    xhttp.open("GET", "https://api.newsriver.io/v2/search?query=text%3AJuventus&sortBy=_score&sortOrder=DESC&limit=15", true);
+    xhttp.open("GET", "https://api.newsriver.io/v2/search?query=" + encodeURIComponent(query), true);
     xhttp.setRequestHeader("Authorization", token);
     xhttp.send();
+}
+
+// query is a JS object
+function queryBuilder() {
+    var field = document.getElementsByClassName('field');
+    // console.log(field[0].value);
+    // console.log(field.length);
+
+    var phrase = document.getElementsByClassName('phrase');
+    // console.log(phrase[0].value);
+
+    var query = '';
+
+    for (var i =0; i < field.length; i++) {
+        query += field[i].value + ':' + phrase[i].value;
+        if (i < field.length - 1) {
+            query += ' AND '
+        }
+        console.log(`Field n. ${i} query = "${field[i].value}:${phrase[i].value}"`);
+    }
+    //
+    // // var query = 'text:"Barack Obama" AND language:en AND website.domainName:(cnn.com OR USAToday.com)';
+    // var query = field + ':' + phrase;
+    //
+
+    hsp.getData(function (data) {
+        if (data && data.newsriverToken) {
+            loadNews(query, data.newsriverToken);
+        }
+    });
+}
+
+function addField() {
+
+    var fieldContainer = document.createElement('div');
+    var field = document.createElement('input');
+    var phrase = document.createElement('input');
+
+    fieldContainer.className = 'field-container';
+    field.className = 'field';
+    phrase.className = 'phrase';
+
+    // var defaultField = document.createTextNode('Field to be searched');
+    // var defaultPhrase = document.createTextNode('Phrase to search');
+
+    // field.appendChild(defaultField);
+    // phrase.appendChild(defaultPhrase);
+
+    field.value = 'Field to be searched';
+    phrase.value = 'Phrase to search';
+    fieldContainer.appendChild(field);
+    fieldContainer.appendChild(phrase);
+
+    document.getElementById('query-container').appendChild(fieldContainer);
+
 }
