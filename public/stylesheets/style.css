@@ -105,3 +105,17 @@ a {
     color: white;
     background-color: #8fd4ef;
 }
+
+.token-container-hidden {
+    display: none;
+}
+
+.token-input {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.token-input > input {
+    width: 95%;
+}

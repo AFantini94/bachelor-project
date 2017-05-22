@@ -94,12 +94,23 @@ window.onload = function () {
 
     hsp.init({});
 
-
     hsp.getData(function (data) {
         console.log(data);
         if (!data || !data.newsriverToken) {
-            console.log('saving token...');
-            hsp.saveData({newsriverToken: 'sBBqsGXiYgF0Db5OV5tAw6mQIvkRHsRXj1ydG2cLExfkfk3fuigx_ECw83pplNwx'});
+            var tokenContainer = document.getElementById('token-container');
+            var tokenLoginButton = document.getElementById('login-btn');
+            tokenLoginButton.addEventListener('click', function () {
+                var tokenTextInput = document.getElementById('token-text-input');
+                var token = tokenTextInput.value.trim();
+
+                console.log('Saving token...');
+                hsp.saveData({newsriverToken: token});
+                // hsp.saveData({newsriverToken: 'sBBqsGXiYgF0Db5OV5tAw6mQIvkRHsRXj1ydG2cLExfkfk3fuigx_ECw83pplNwx'});
+
+                loadNews(token);
+            });
+
+            tokenContainer.classList.remove('token-container-hidden')
         } else {
             loadNews(data.newsriverToken);
         }
