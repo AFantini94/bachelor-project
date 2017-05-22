@@ -94,6 +94,19 @@ window.onload = function () {
 
     hsp.init({});
 
+
+    hsp.getData(function (data) {
+        console.log(data);
+        if (!data || !data.newsriverToken) {
+            console.log('saving token...');
+            hsp.saveData({newsriverToken: 'sBBqsGXiYgF0Db5OV5tAw6mQIvkRHsRXj1ydG2cLExfkfk3fuigx_ECw83pplNwx'});
+        } else {
+            loadNews(data.newsriverToken);
+        }
+    });
+};
+
+function loadNews(token) {
     // ajax
 
     var xhttp = new XMLHttpRequest();
@@ -112,6 +125,6 @@ window.onload = function () {
         }
     };
     xhttp.open("GET", "https://api.newsriver.io/v2/search?query=text%3AJuventus&sortBy=_score&sortOrder=DESC&limit=15", true);
-    xhttp.setRequestHeader("Authorization", "sBBqsGXiYgF0Db5OV5tAw6mQIvkRHsRXj1ydG2cLExfkfk3fuigx_ECw83pplNwx");
+    xhttp.setRequestHeader("Authorization", token);
     xhttp.send();
-};
+}
