@@ -24,7 +24,6 @@ a {
   overflow: hidden;
   text-align: justify;
   position: relative;
-  margin-bottom: 0.5em;
 }
 
 .article-text:after {
