@@ -105,7 +105,8 @@ window.onload = function () {
 
                 console.log('Saving token...');
                 hsp.saveData({newsriverToken: token});
-                // hsp.saveData({newsriverToken: 'sBBqsGXiYgF0Db5OV5tAw6mQIvkRHsRXj1ydG2cLExfkfk3fuigx_ECw83pplNwx'});
+
+                tokenContainer.classList.add('token-container-hidden');
 
                 loadNews(token);
             });
