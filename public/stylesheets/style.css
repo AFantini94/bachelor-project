@@ -118,3 +118,7 @@ a {
 .token-input > input {
     width: 95%;
 }
+
+.no-results {
+    text-align: center;
+}

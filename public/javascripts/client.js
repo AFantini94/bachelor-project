@@ -128,9 +128,24 @@ function loadNews(query, token) {
             var articlesContainer = document.getElementById('articles-container');
             deleteAllChildNodes(articlesContainer);
 
-            articles.forEach(function (article) {
-                articlesContainer.appendChild(createArticleElement(article));
-            });
+            if (articles.length > 0) {
+                articles.forEach(function (article) {
+                    articlesContainer.appendChild(createArticleElement(article));
+                });
+            } else {
+                var noResults = document.createElement('div');
+                noResults.className = 'no-results';
+
+                var oops = document.createElement('h3');
+                oops.innerText = 'Oops!';
+                noResults.appendChild(oops);
+
+                var text = document.createElement('p');
+                text.innerText = 'We couldn\'t find any matching article';
+                noResults.appendChild(text);
+
+                articlesContainer.appendChild(noResults);
+            }
         }
     };
     xhttp.open("GET", "https://api.newsriver.io/v2/search?query=" + encodeURIComponent(query), true);
