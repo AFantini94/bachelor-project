@@ -105,8 +105,16 @@ a {
     background-color: #8fd4ef;
 }
 
-.token-container-hidden {
+.login-container.logged-in .token-container {
     display: none;
+}
+
+#logoutButton {
+    display: none;
+}
+
+.login-container.logged-in #logoutButton {
+    display: inline-block;
 }
 
 .token-input {

@@ -9,15 +9,16 @@ html
         script(src='https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js')
         script(src='/libs/sha512/sha512.min.js')
         script(src='/javascripts/client.js')
-        div.token-container.token-container-hidden#token-container
-            p
-                | Get your API token at&nbsp;
-                a(href="https://newsriver.io" target="_blank" rel="noopener noreferrer") https://newsriver.io
-                | &nbsp;and paste it in the box below
-            div.token-input
-                input(type="text" placeholder="Your Newsriver API token")#token-text-input
-                button(type="button")#login-btn Login
-        button#logoutButton(type="button") Logout
+        div.login-container#login-container
+            div.token-container
+                p
+                    | Get your API token at&nbsp;
+                    a(href="https://newsriver.io" target="_blank" rel="noopener noreferrer") https://newsriver.io
+                    | &nbsp;and paste it in the box below
+                div.token-input
+                    input(type="text" placeholder="Your Newsriver API token")#token-text-input
+                    button(type="button")#login-btn Login
+            button#logoutButton(type="button") Logout
 
         div#query-container
             div.field-container
