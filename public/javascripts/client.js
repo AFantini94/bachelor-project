@@ -96,31 +96,39 @@ window.onload = function () {
 
     hsp.init({});
 
+    var tokenContainer = document.getElementById('token-container');
+    var tokenLoginButton = document.getElementById('login-btn');
+    tokenLoginButton.addEventListener('click', function () {
+        var tokenTextInput = document.getElementById('token-text-input');
+        var token = tokenTextInput.value.trim();
+        tokenTextInput.value = '';
+
+        console.log('Saving token...');
+        hsp.saveData({newsriverToken: token});
+
+        tokenContainer.classList.add('token-container-hidden');
+    });
+
+    var logoutBtn = document.getElementById('logoutButton');
+    logoutBtn.addEventListener('click', logout);
+
     hsp.getData(function (data) {
         console.log(data);
         if (!data || !data.newsriverToken) {
-            var tokenContainer = document.getElementById('token-container');
-            var tokenLoginButton = document.getElementById('login-btn');
-            tokenLoginButton.addEventListener('click', function () {
-                var tokenTextInput = document.getElementById('token-text-input');
-                var token = tokenTextInput.value.trim();
-
-                console.log('Saving token...');
-                hsp.saveData({newsriverToken: token});
-
-                tokenContainer.classList.add('token-container-hidden');
-            });
-
             tokenContainer.classList.remove('token-container-hidden')
         }
-        // } else {
-        //     loadNews(data.newsriverToken);
-        // }
     });
 
     document.getElementsByClassName('field')[0].addEventListener('change', detectInput);
     console.log(document.getElementsByClassName('field')[0])
 };
+
+function logout() {
+    hsp.saveData(null);
+
+    var tokenContainer = document.getElementById('token-container');
+    tokenContainer.classList.remove('token-container-hidden');
+}
 
 function loadNews(query, token) {
     // ajax
