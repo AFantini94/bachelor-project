@@ -33,6 +33,8 @@ function createArticleElement(article) {
 
     var articleTitle = document.createElement('a');
     articleTitle.href = article.url;
+    articleTitle.target = '_blank';
+    articleTitle.rel = 'noopener noreferrer';
     articleTitle.className = 'article-title';
     articleTitle.innerText = article.title;
     newArticle.appendChild(articleTitle);
