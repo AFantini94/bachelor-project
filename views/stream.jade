@@ -21,8 +21,12 @@ html
 
         div#query-container
             div.field-container
-                input.field(type='text' value='Field to be searched')
-                input.phrase(type='text' value='Phrase to search')
+                select.field
+                    option(disabled selected value='null') Article Field
+                    option(value='title') Title (only)
+                    option(value='text') Text
+                    option(value='language') Language
+                input.phrase(type='text' placeholder='Phrase to search')
                 button.add(onclick='addField()') +
         button#send-query(onclick='queryBuilder()') Send Query
 

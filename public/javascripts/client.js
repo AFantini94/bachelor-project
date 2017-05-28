@@ -115,6 +115,9 @@ window.onload = function () {
         //     loadNews(data.newsriverToken);
         // }
     });
+
+    document.getElementsByClassName('field')[0].addEventListener('change', detectInput);
+    console.log(document.getElementsByClassName('field')[0])
 };
 
 function loadNews(query, token) {
@@ -144,6 +147,7 @@ function queryBuilder() {
     // console.log(field[0].value);
     // console.log(field.length);
 
+
     var phrase = document.getElementsByClassName('phrase');
     // console.log(phrase[0].value);
 
@@ -171,7 +175,7 @@ function queryBuilder() {
 function addField() {
 
     var fieldContainer = document.createElement('div');
-    var field = document.createElement('input');
+    var field = document.createElement('select');
     var phrase = document.createElement('input');
 
     fieldContainer.className = 'field-container';
@@ -179,16 +183,53 @@ function addField() {
     phrase.className = 'phrase';
 
     // var defaultField = document.createTextNode('Field to be searched');
-    // var defaultPhrase = document.createTextNode('Phrase to search');
+    var defaultPhrase = document.createTextNode('Phrase to search');
 
     // field.appendChild(defaultField);
-    // phrase.appendChild(defaultPhrase);
+    phrase.appendChild(defaultPhrase);
 
-    field.value = 'Field to be searched';
-    phrase.value = 'Phrase to search';
-    fieldContainer.appendChild(field);
+    // field.value = 'Field to be searched';
+    phrase.placeholder = 'Phrase to search';
+
+    fieldContainer.appendChild(appendFields(field));
     fieldContainer.appendChild(phrase);
+
 
     document.getElementById('query-container').appendChild(fieldContainer);
 
+}
+
+function appendFields(selectElement) {
+
+    var articleField = document.createElement('option');
+    articleField.text = 'Article Field';
+    articleField.value = 'null';
+    articleField.disabled = true;
+    articleField.selected = true;
+
+    var titleField = document.createElement('option');
+    titleField.text = 'Title (only)';
+    titleField.value = 'title';
+
+    var textField = document.createElement('option');
+    textField.text = 'Text';
+    textField.value = 'text';
+
+    var languageField = document.createElement('option');
+    languageField.text = 'Language';
+    languageField.value = 'language';
+
+
+    selectElement.appendChild(articleField);
+    selectElement.appendChild(titleField);
+    selectElement.appendChild(textField);
+    selectElement.appendChild(languageField);
+
+    return selectElement;
+
+}
+
+function detectInput() {
+    console.log('Hello');
+    console.log(this.value);
 }
