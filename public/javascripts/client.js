@@ -119,8 +119,10 @@ window.onload = function () {
         }
     });
 
-    document.getElementsByClassName('field')[0].addEventListener('change', detectInput);
-    console.log(document.getElementsByClassName('field')[0])
+    addField();
+
+    // document.getElementsByClassName('field')[0].addEventListener('change', detectInput);
+    // console.log(document.getElementsByClassName('field')[0])
 };
 
 function logout() {
@@ -131,6 +133,21 @@ function logout() {
 }
 
 function loadNews(query, token) {
+    // result sorting
+    var sort = document.getElementById('sort');
+    var sorting = '';
+    switch (sort.value) {
+        case 'score':
+            sorting = '_score';
+            break;
+        case 'date':
+            sorting = 'discoverDate';
+            break;
+        case 'read':
+            sorting = 'metadata.readTime.seconds';
+            break;
+    }
+
     // ajax
 
     var xhttp = new XMLHttpRequest();
@@ -161,34 +178,41 @@ function loadNews(query, token) {
             }
         }
     };
-    xhttp.open("GET", "https://api.newsriver.io/v2/search?query=" + encodeURIComponent(query), true);
+    xhttp.open("GET", "https://api.newsriver.io/v2/search?query=" + encodeURIComponent(query) + '&sortBy=' + sorting, true);
     xhttp.setRequestHeader("Authorization", token);
     xhttp.send();
 }
 
 // query is a JS object
 function queryBuilder() {
-    var field = document.getElementsByClassName('field');
+    var fields = document.getElementsByClassName('field');
     // console.log(field[0].value);
     // console.log(field.length);
-
 
     var phrase = document.getElementsByClassName('phrase');
     // console.log(phrase[0].value);
 
+    var andOrGroups = document.getElementsByClassName('and-or-container');
+
     var query = '';
 
-    for (var i =0; i < field.length; i++) {
-        query += field[i].value + ':' + phrase[i].value;
-        if (i < field.length - 1) {
-            query += ' AND '
+    for (var i =0; i < fields.length; i++) {
+        query += fields[i].value + ':' + phrase[i].value;
+        if (i < fields.length - 1) {
+            if (andOrGroups[i].booleanOp) {
+                query += ' AND ';
+            } else {
+                query += ' OR ';
+            }
         }
-        console.log(`Field n. ${i} query = "${field[i].value}:${phrase[i].value}"`);
+        console.log(`Field n. ${i} query = "${fields[i].value}:${phrase[i].value}"`);
     }
     //
     // // var query = 'text:"Barack Obama" AND language:en AND website.domainName:(cnn.com OR USAToday.com)';
     // var query = field + ':' + phrase;
     //
+
+    console.log('Query', query);
 
     hsp.getData(function (data) {
         if (data && data.newsriverToken) {
@@ -198,30 +222,51 @@ function queryBuilder() {
 }
 
 function addField() {
-
+    var queryContainer = document.getElementById('query-container');
     var fieldContainer = document.createElement('div');
     var field = document.createElement('select');
     var phrase = document.createElement('input');
+    var minusButton = document.createElement('button');
+    minusButton.type = 'button';
+    minusButton.innerText = '-';
+    minusButton.addEventListener('click', function () {
+        fieldContainer.parentNode.removeChild(fieldContainer);
+    });
 
     fieldContainer.className = 'field-container';
     field.className = 'field';
     phrase.className = 'phrase';
 
-    // var defaultField = document.createTextNode('Field to be searched');
-    var defaultPhrase = document.createTextNode('Phrase to search');
-
-    // field.appendChild(defaultField);
-    phrase.appendChild(defaultPhrase);
-
-    // field.value = 'Field to be searched';
     phrase.placeholder = 'Phrase to search';
+
+    if (queryContainer.querySelector('.field-container') !== null) {
+        // and/or button group
+        var andOrContainer = document.createElement('div');
+        andOrContainer.className = 'and-or-container';
+        var andButton = document.createElement('div');
+        andButton.innerText = 'AND';
+        andButton.className = 'andOrBtn no-select';
+        andButton.classList.add('highlight');
+        var orButton = document.createElement('div');
+        orButton.innerText = 'OR';
+        orButton.className = 'andOrBtn no-select';
+        andOrContainer.appendChild(andButton);
+        andOrContainer.appendChild(orButton);
+        andOrContainer.booleanOp = true; // true = AND, false = OR
+        andOrContainer.addEventListener('click', function () {
+            andOrContainer.booleanOp = !andOrContainer.booleanOp;
+            andButton.classList.toggle('highlight');
+            orButton.classList.toggle('highlight');
+        });
+
+        fieldContainer.appendChild(andOrContainer);
+    }
 
     fieldContainer.appendChild(appendFields(field));
     fieldContainer.appendChild(phrase);
+    fieldContainer.appendChild(minusButton);
 
-
-    document.getElementById('query-container').appendChild(fieldContainer);
-
+    queryContainer.appendChild(fieldContainer);
 }
 
 function appendFields(selectElement) {

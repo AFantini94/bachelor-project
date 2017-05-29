@@ -7,7 +7,6 @@ html
 
     body
         script(src='https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js')
-        script(src='/libs/sha512/sha512.min.js')
         script(src='/javascripts/client.js')
         div.login-container#login-container
             div.token-container
@@ -19,16 +18,13 @@ html
                     input(type="text" placeholder="Your Newsriver API token")#token-text-input
                     button(type="button")#login-btn Login
             button#logoutButton(type="button") Logout
-
         div#query-container
-            div.field-container
-                select.field
-                    option(disabled selected value='null') Article Field
-                    option(value='title') Title (only)
-                    option(value='text') Text
-                    option(value='language') Language
-                input.phrase(type='text' placeholder='Phrase to search')
-                button.add(onclick='addField()') +
+        button.add(onclick='addField()') +
+        span Sort by:
+        select#sort
+            option(value='score') Score
+            option(value='date') Date
+            option(value='read') Reading time
         button#send-query(onclick='queryBuilder()') Send Query
 
         div#articles-container
