@@ -134,19 +134,22 @@ function logout() {
 
 function loadNews(query, token) {
     // result sorting
-    var sort = document.getElementById('sort');
-    var sorting = '';
-    switch (sort.value) {
+    var sortSelect = document.getElementById('sort');
+    var sort = '';
+    switch (sortSelect.value) {
         case 'score':
-            sorting = '_score';
+            sort = '_score';
             break;
         case 'date':
-            sorting = 'discoverDate';
+            sort = 'discoverDate';
             break;
         case 'read':
-            sorting = 'metadata.readTime.seconds';
+            sort = 'metadata.readTime.seconds';
             break;
     }
+
+    var sortOrderSelect = document.getElementById('sortOrder');
+    var sortOrder = sortOrderSelect.value;
 
     // ajax
 
@@ -178,7 +181,9 @@ function loadNews(query, token) {
             }
         }
     };
-    xhttp.open("GET", "https://api.newsriver.io/v2/search?query=" + encodeURIComponent(query) + '&sortBy=' + sorting, true);
+    xhttp.open("GET", "https://api.newsriver.io/v2/search?query=" + encodeURIComponent(query) +
+        '&sortBy=' + sort +
+        '&sortOrder=' + sortOrder, true);
     xhttp.setRequestHeader("Authorization", token);
     xhttp.send();
 }
@@ -221,19 +226,35 @@ function queryBuilder() {
     });
 }
 
+function removeAndOrButtonsFromFirstFieldContainer() {
+    var fieldContainers = document.getElementsByClassName('field-container');
+    if (fieldContainers.length > 0) {
+        var container = fieldContainers[0];
+
+        var andOrGroups = container.getElementsByClassName('and-or-container');
+        if (andOrGroups.length > 0) {
+            andOrGroups[0].parentNode.removeChild(andOrGroups[0]);
+        }
+    }
+}
+
 function addField() {
     var queryContainer = document.getElementById('query-container');
     var fieldContainer = document.createElement('div');
+    var styledSelectDiv = document.createElement('div');
     var field = document.createElement('select');
     var phrase = document.createElement('input');
     var minusButton = document.createElement('button');
     minusButton.type = 'button';
-    minusButton.innerText = '-';
+    minusButton.className = 'btn';
+    minusButton.appendChild(createFontAwesomeIconElement('fa-fw fa-trash'));
     minusButton.addEventListener('click', function () {
         fieldContainer.parentNode.removeChild(fieldContainer);
+        removeAndOrButtonsFromFirstFieldContainer();
     });
 
     fieldContainer.className = 'field-container';
+    styledSelectDiv.className = 'styled-select';
     field.className = 'field';
     phrase.className = 'phrase';
 
@@ -245,11 +266,11 @@ function addField() {
         andOrContainer.className = 'and-or-container';
         var andButton = document.createElement('div');
         andButton.innerText = 'AND';
-        andButton.className = 'andOrBtn no-select';
+        andButton.className = 'and-or-btn no-select';
         andButton.classList.add('highlight');
         var orButton = document.createElement('div');
         orButton.innerText = 'OR';
-        orButton.className = 'andOrBtn no-select';
+        orButton.className = 'and-or-btn no-select';
         andOrContainer.appendChild(andButton);
         andOrContainer.appendChild(orButton);
         andOrContainer.booleanOp = true; // true = AND, false = OR
@@ -262,7 +283,8 @@ function addField() {
         fieldContainer.appendChild(andOrContainer);
     }
 
-    fieldContainer.appendChild(appendFields(field));
+    styledSelectDiv.appendChild(appendFields(field));
+    fieldContainer.appendChild(styledSelectDiv);
     fieldContainer.appendChild(phrase);
     fieldContainer.appendChild(minusButton);
 

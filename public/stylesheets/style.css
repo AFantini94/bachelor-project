@@ -8,6 +8,10 @@ a {
   color: #00B7FF;
 }
 
+*:focus {
+    outline: none;
+}
+
 /* https://stackoverflow.com/a/4407335/2811496 */
 .no-select {
     -webkit-touch-callout: none; /* iOS Safari */
@@ -122,6 +126,7 @@ a {
 
 #logoutButton {
     display: none;
+    float: right;
 }
 
 .login-container.logged-in #logoutButton {
@@ -146,13 +151,13 @@ a {
     border: solid 2px #00B7FF;
     border-radius: 2px;
     color: #00B7FF;
-    display: flex;
+    display: inline-flex;
     width: 100px;
     justify-content: space-around;
     cursor: pointer;
 }
 
-.andOrBtn {
+.and-or-btn {
     padding: 0.1em;
     display: inline-block;
     flex-grow: 1;
@@ -164,4 +169,91 @@ a {
 .highlight {
     background-color: #00B7FF;
     color: white;
+}
+
+/* styled select adapted from: https://codepen.io/ericrasch/pen/zjDBx */
+.styled-select {
+    display: inline-block;
+    overflow: hidden;
+
+    border-radius: 2px;
+
+    background-color: #00B7FF;
+
+    height: 29px;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.styled-select select {
+    background: transparent;
+    font-size: 14px;
+    border: none;
+    height: 29px;
+    padding: 5px; /* If you add too much padding here, the options won't show in IE */
+    color: white;
+}
+
+.field-container:first-child {
+    margin-left: 104px;
+}
+
+.field-container {
+    margin-bottom: 0.5em;
+    display: flex;
+    align-items: center;
+}
+
+.sort-container {
+    display: flex;
+    align-items: center;
+}
+
+.btn {
+    background-color: #00B7FF;
+    border: solid 2px transparent;
+    border-radius: 2px;
+    color: white;
+    padding: 0.5em;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: white;
+    color: #00B7FF;
+    border: solid 2px #00B7FF;
+}
+
+.phrase {
+    padding: 0.5em;
+    flex-grow: 1;
+}
+
+.add {
+}
+
+#login-container {
+    display: flex;
+}
+.token-container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#logoutButton {
+    margin-left: auto;
+}
+
+.search-btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+#send-query {
+    width: 200px;
+}
+
+.sort-addfield-container {
+    display: flex;
+    justify-content: space-between;
 }
