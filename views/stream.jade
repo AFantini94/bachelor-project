@@ -8,7 +8,7 @@ html
     body
         script(src='https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js')
         script(src='/javascripts/client.js')
-        div.login-container#login-container
+        div.login-container.logged-in#login-container
             div.token-container
                 p
                     | Get your API token at&nbsp;
@@ -25,6 +25,9 @@ html
             option(value='score') Score
             option(value='date') Date
             option(value='read') Reading time
+        select#sortOrder
+            option(value='asc') ASC
+            option(value='desc') DESC
         button#send-query(onclick='queryBuilder()') Send Query
 
         div#articles-container
