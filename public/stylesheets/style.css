@@ -126,7 +126,6 @@ a {
 
 #logoutButton {
     display: none;
-    float: right;
 }
 
 .login-container.logged-in #logoutButton {
@@ -182,7 +181,6 @@ a {
 
     height: 29px;
     margin-left: 0.5em;
-    margin-right: 0.5em;
 }
 
 .styled-select select {
@@ -229,11 +227,9 @@ a {
     flex-grow: 1;
 }
 
-.add {
-}
-
 #login-container {
     display: flex;
+    margin-bottom: 0.5em;
 }
 .token-container {
     margin-left: auto;
@@ -271,4 +267,13 @@ a {
 
 .hidden {
     display: none;
+}
+
+#query-container {
+    margin-bottom: 1em;
+}
+#search-container {
+    border-bottom: solid 2px #00B7FF;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
 }

@@ -178,6 +178,7 @@ function loadNews(query, token) {
                 articles.forEach(function (article) {
                     articlesContainer.appendChild(createArticleElement(article));
                 });
+                articles[0].scrollIntoView();
             } else {
                 var noResults = document.createElement('div');
                 noResults.className = 'no-results';

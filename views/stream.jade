@@ -20,24 +20,25 @@ html
                     button.btn(type="button")#login-btn Login
             button.btn#logoutButton(type="button") Logout
         div.hidden#main-content-container
-            div#query-container
-            div.sort-addfield-container
-                button.btn.add(onclick='addField()')
-                    i.fa.fa-fw.fa-plus(aria-hidden="true")
-                    span Add field
-                div.sort-container
-                    span Sort by:
-                    div.styled-select
-                        select#sort
-                            option(value='score') Score
-                            option(value='date') Date
-                            option(value='read') Reading time
-                    div.styled-select
-                        select#sortOrder
-                            option(value='desc') DESC
-                            option(value='asc') ASC
-            div.search-btn-container
-                button.btn#send-query(onclick='queryBuilder()') Search News
+            div#search-container
+                div#query-container
+                div.sort-addfield-container
+                    button.btn.add(onclick='addField()')
+                        i.fa.fa-fw.fa-plus(aria-hidden="true")
+                        span Add field
+                    div.sort-container
+                        span Sort by:
+                        div.styled-select
+                            select#sort
+                                option(value='score') Score
+                                option(value='date') Date
+                                option(value='read') Reading time
+                        div.styled-select
+                            select#sortOrder
+                                option(value='desc') DESC
+                                option(value='asc') ASC
+                div.search-btn-container
+                    button.btn#send-query(onclick='queryBuilder()') Search News
             div.hidden#loading-status-container
                 div#loading-status
             div#articles-container
