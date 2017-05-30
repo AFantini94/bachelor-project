@@ -133,6 +133,9 @@ function logout() {
 }
 
 function loadNews(query, token) {
+    var loadingStatus = document.getElementById('loading-status-container');
+    loadingStatus.classList.remove('hidden');
+
     // result sorting
     var sortSelect = document.getElementById('sort');
     var sort = '';
@@ -155,6 +158,10 @@ function loadNews(query, token) {
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
+        if (this.readyState === 4) {
+            loadingStatus.classList.add('hidden');
+        }
+
         if (this.readyState === 4 && this.status === 200) {
             var articles = JSON.parse(this.response);
 
@@ -318,7 +325,6 @@ function appendFields(selectElement) {
     selectElement.appendChild(languageField);
 
     return selectElement;
-
 }
 
 function detectInput() {

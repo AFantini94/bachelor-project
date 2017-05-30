@@ -257,3 +257,18 @@ a {
     display: flex;
     justify-content: space-between;
 }
+
+#loading-status-container {
+    width: 100%;
+}
+#loading-status {
+    background: url(/images/loading.gif) center;
+    background-size: 150px;
+    height: 25px;
+    width: 25px;
+    margin: 0.5em auto;
+}
+
+.hidden {
+    display: none;
+}
