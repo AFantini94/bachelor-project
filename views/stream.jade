@@ -9,7 +9,7 @@ html
     body
         script(src='https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js')
         script(src='/javascripts/client.js')
-        div.login-container.logged-in#login-container
+        div.login-container#login-container
             div.token-container
                 p
                     | Get your API token at&nbsp;
@@ -19,24 +19,25 @@ html
                     input(type="text" placeholder="Your Newsriver API token")#token-text-input
                     button.btn(type="button")#login-btn Login
             button.btn#logoutButton(type="button") Logout
-        div#query-container
-        div.sort-addfield-container
-            button.btn.add(onclick='addField()')
-                i.fa.fa-fw.fa-plus(aria-hidden="true")
-                span Add field
-            div.sort-container
-                span Sort by:
-                div.styled-select
-                    select#sort
-                        option(value='score') Score
-                        option(value='date') Date
-                        option(value='read') Reading time
-                div.styled-select
-                    select#sortOrder
-                        option(value='desc') DESC
-                        option(value='asc') ASC
-        div.search-btn-container
-            button.btn#send-query(onclick='queryBuilder()') Search News
-        div.hidden#loading-status-container
-            div#loading-status
-        div#articles-container
+        div.hidden#main-content-container
+            div#query-container
+            div.sort-addfield-container
+                button.btn.add(onclick='addField()')
+                    i.fa.fa-fw.fa-plus(aria-hidden="true")
+                    span Add field
+                div.sort-container
+                    span Sort by:
+                    div.styled-select
+                        select#sort
+                            option(value='score') Score
+                            option(value='date') Date
+                            option(value='read') Reading time
+                    div.styled-select
+                        select#sortOrder
+                            option(value='desc') DESC
+                            option(value='asc') ASC
+            div.search-btn-container
+                button.btn#send-query(onclick='queryBuilder()') Search News
+            div.hidden#loading-status-container
+                div#loading-status
+            div#articles-container

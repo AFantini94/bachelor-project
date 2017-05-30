@@ -96,7 +96,9 @@ window.onload = function () {
 
     hsp.init({});
 
+
     var loginContainer = document.getElementById('login-container');
+    var mainContentContainer = document.getElementById('main-content-container');
     var tokenLoginButton = document.getElementById('login-btn');
     tokenLoginButton.addEventListener('click', function () {
         var tokenTextInput = document.getElementById('token-text-input');
@@ -107,6 +109,7 @@ window.onload = function () {
         hsp.saveData({newsriverToken: token});
 
         loginContainer.classList.add('logged-in');
+        mainContentContainer.classList.remove('hidden');
     });
 
     var logoutBtn = document.getElementById('logoutButton');
@@ -114,8 +117,9 @@ window.onload = function () {
 
     hsp.getData(function (data) {
         console.log(data);
-        if (!data || !data.newsriverToken) {
-            loginContainer.classList.remove('logged-in');
+        if (data && data.newsriverToken) {
+            loginContainer.classList.add('logged-in');
+            mainContentContainer.classList.remove('hidden');
         }
     });
 
@@ -129,7 +133,9 @@ function logout() {
     hsp.saveData(null);
 
     var loginContainer = document.getElementById('login-container');
+    var mainContentContainer = document.getElementById('main-content-container');
     loginContainer.classList.remove('logged-in');
+    mainContentContainer.classList.add('hidden');
 }
 
 function loadNews(query, token) {
