@@ -277,3 +277,10 @@ a {
     padding-bottom: 0.5em;
     margin-bottom: 1em;
 }
+
+.article-date {
+    margin: 0 0 0.5em;
+    color: #1b779a;
+    font-style: italic;
+    font-size: 0.9em;
+}

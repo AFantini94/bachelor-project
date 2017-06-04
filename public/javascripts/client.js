@@ -14,6 +14,7 @@ function deleteAllChildNodes(root) {
 }
 
 function createArticleElement(article) {
+    console.log(article);
     var newArticle = document.createElement('div');
     newArticle.className = 'article';
 
@@ -38,6 +39,22 @@ function createArticleElement(article) {
     articleTitle.className = 'article-title';
     articleTitle.innerText = article.title;
     newArticle.appendChild(articleTitle);
+
+    var articlePublishDate = document.createElement('p');
+    articlePublishDate.className = 'article-date';
+    if (article.publishDate) {
+        var publishDate = new Date(article.publishDate);
+        articlePublishDate.innerText = 'Published by ' + article.website.name +
+            ' on ' + publishDate.toLocaleDateString();
+
+        // some articles have wrong publish time
+        if (publishDate.getHours() !== 0 || publishDate.getMinutes() !== 0 || publishDate.getSeconds() !== 0) {
+            articlePublishDate.innerText += ' at ' + publishDate.toLocaleTimeString();
+        }
+    } else {
+        articlePublishDate.innerText = 'Published by ' + article.website.name;
+    }
+    newArticle.appendChild(articlePublishDate);
 
     var articleText = document.createElement('div');
     articleText.className = 'article-text';
