@@ -120,13 +120,15 @@ window.onload = function () {
     tokenLoginButton.addEventListener('click', function () {
         var tokenTextInput = document.getElementById('token-text-input');
         var token = tokenTextInput.value.trim();
-        tokenTextInput.value = '';
+        if (token.length > 0) {
+            tokenTextInput.value = '';
 
-        console.log('Saving token...');
-        hsp.saveData({newsriverToken: token});
+            console.log('Saving token...');
+            hsp.saveData({newsriverToken: token});
 
-        loginContainer.classList.add('logged-in');
-        mainContentContainer.classList.remove('hidden');
+            loginContainer.classList.add('logged-in');
+            mainContentContainer.classList.remove('hidden');
+        }
     });
 
     var queryBuilderContainer = document.getElementById('query-builder-container');
