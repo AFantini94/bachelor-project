@@ -129,6 +129,26 @@ window.onload = function () {
         mainContentContainer.classList.remove('hidden');
     });
 
+    var queryBuilderContainer = document.getElementById('query-builder-container');
+    var queryStringContainer = document.getElementById('query-string-container');
+    var showAdvancedQuery = document.getElementById('show-advanced-query');
+    var showSimpleQuery = document.getElementById('show-simple-query');
+    var advanced = false;
+    var toggleQuery = function () {
+        if (advanced) {
+            queryBuilderContainer.classList.remove('hidden');
+            queryStringContainer.classList.add('hidden');
+        } else {
+            queryBuilder();
+            queryBuilderContainer.classList.add('hidden');
+            queryStringContainer.classList.remove('hidden');
+        }
+        advanced = !advanced;
+    };
+    showAdvancedQuery.addEventListener('click', toggleQuery);
+    showSimpleQuery.addEventListener('click', toggleQuery);
+
+
     var logoutBtn = document.getElementById('logoutButton');
     logoutBtn.addEventListener('click', logout);
 
@@ -153,6 +173,16 @@ function logout() {
     var mainContentContainer = document.getElementById('main-content-container');
     loginContainer.classList.remove('logged-in');
     mainContentContainer.classList.add('hidden');
+}
+
+function searchNews() {
+    var query = queryBuilder();
+
+    hsp.getData(function (data) {
+        if (data && data.newsriverToken) {
+            loadNews(query, data.newsriverToken);
+        }
+    });
 }
 
 function loadNews(query, token) {
@@ -221,27 +251,35 @@ function loadNews(query, token) {
 
 // query is a JS object
 function queryBuilder() {
-    var fields = document.getElementsByClassName('field');
-    // console.log(field[0].value);
-    // console.log(field.length);
-
-    var phrase = document.getElementsByClassName('phrase');
-    // console.log(phrase[0].value);
-
-    var andOrGroups = document.getElementsByClassName('and-or-container');
+    var customQueryString = document.getElementById('custom-query-string');
 
     var query = '';
+    // if the user provided a custom Lucene query, use it
+    if (customQueryString.value.trim().length > 0) {
+        query = customQueryString.value.trim();
+    } else {
+        var fields = document.getElementsByClassName('field');
+        // console.log(field[0].value);
+        // console.log(field.length);
 
-    for (var i =0; i < fields.length; i++) {
-        query += fields[i].value + ':' + phrase[i].value;
-        if (i < fields.length - 1) {
-            if (andOrGroups[i].booleanOp) {
-                query += ' AND ';
-            } else {
-                query += ' OR ';
+        var phrase = document.getElementsByClassName('phrase');
+        // console.log(phrase[0].value);
+
+        var andOrGroups = document.getElementsByClassName('and-or-container');
+
+        for (var i = 0; i < fields.length; i++) {
+            query += fields[i].value + ':' + phrase[i].value;
+            if (i < fields.length - 1) {
+                if (andOrGroups[i].booleanOp) {
+                    query += ' AND ';
+                } else {
+                    query += ' OR ';
+                }
             }
+            console.log(`Field n. ${i} query = "${fields[i].value}:${phrase[i].value}"`);
         }
-        console.log(`Field n. ${i} query = "${fields[i].value}:${phrase[i].value}"`);
+
+        customQueryString.value = query;
     }
     //
     // // var query = 'text:"Barack Obama" AND language:en AND website.domainName:(cnn.com OR USAToday.com)';
@@ -250,11 +288,7 @@ function queryBuilder() {
 
     console.log('Query', query);
 
-    hsp.getData(function (data) {
-        if (data && data.newsriverToken) {
-            loadNews(query, data.newsriverToken);
-        }
-    });
+    return query;
 }
 
 function removeAndOrButtonsFromFirstFieldContainer() {

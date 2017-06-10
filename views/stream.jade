@@ -21,24 +21,34 @@ html
             button.btn#logoutButton(type="button") Logout
         div.hidden#main-content-container
             div#search-container
-                div#query-container
-                div.sort-addfield-container
-                    button.btn.add(onclick='addField()')
-                        i.fa.fa-fw.fa-plus(aria-hidden="true")
-                        span Add field
-                    div.sort-container
-                        span Sort by:
-                        div.styled-select
-                            select#sort
-                                option(value='score') Score
-                                option(value='date') Date
-                                option(value='read') Reading time
-                        div.styled-select
-                            select#sortOrder
-                                option(value='desc') DESC
-                                option(value='asc') ASC
+                div#query-builder-container
+                    div.toggle-advanced-container
+                        button.btn#show-advanced-query
+                            i.fa.fa-fw.fa-edit(aria-hidden="true")
+                            span Advanced query...
+                    div#query-container
+                    div.sort-addfield-container
+                        button.btn.add(onclick='addField()')
+                            i.fa.fa-fw.fa-plus(aria-hidden="true")
+                            span Add field
+                        div.sort-container
+                            span Sort by:
+                            div.styled-select
+                                select#sort
+                                    option(value='score') Score
+                                    option(value='date') Date
+                                    option(value='read') Reading time
+                            div.styled-select
+                                select#sortOrder
+                                    option(value='desc') DESC
+                                    option(value='asc') ASC
+                div.hidden#query-string-container
+                    button.btn#show-simple-query
+                        i.fa.fa-fw.fa-edit(aria-hidden="true")
+                        span Simple query...
+                    input(type="text" placeholder="Type a Lucene query string here...")#custom-query-string
                 div.search-btn-container
-                    button.btn#send-query(onclick='queryBuilder()') Search News
+                    button.btn#send-query(onclick='searchNews()') Search News
             div.hidden#loading-status-container
                 div#loading-status
             div#articles-container
