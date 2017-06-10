@@ -135,9 +135,9 @@ window.onload = function () {
     var queryStringContainer = document.getElementById('query-string-container');
     var showAdvancedQuery = document.getElementById('show-advanced-query');
     var showSimpleQuery = document.getElementById('show-simple-query');
-    var advanced = false;
+    window.advancedQuery = false;
     var toggleQuery = function () {
-        if (advanced) {
+        if (window.advancedQuery) {
             queryBuilderContainer.classList.remove('hidden');
             queryStringContainer.classList.add('hidden');
         } else {
@@ -145,7 +145,7 @@ window.onload = function () {
             queryBuilderContainer.classList.add('hidden');
             queryStringContainer.classList.remove('hidden');
         }
-        advanced = !advanced;
+        window.advancedQuery = !window.advancedQuery;
     };
     showAdvancedQuery.addEventListener('click', toggleQuery);
     showSimpleQuery.addEventListener('click', toggleQuery);
@@ -257,7 +257,7 @@ function queryBuilder() {
 
     var query = '';
     // if the user provided a custom Lucene query, use it
-    if (customQueryString.value.trim().length > 0) {
+    if (window.advancedQuery) {
         query = customQueryString.value.trim();
     } else {
         var fields = document.getElementsByClassName('field');
