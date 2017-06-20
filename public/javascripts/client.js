@@ -71,13 +71,12 @@ function createArticleElement(article) {
         if (showingMore) {
             if (expandedArticle !== null) {
                 expandedArticle.classList.remove('expanded');
+                expandedArticle.classList.remove('article-text-full');
             }
 
             newArticle.classList.add('expanded');
             articleText.classList.add('article-text-full');
             loadMoreBtn.innerText = 'Show less...';
-
-            newArticle.scrollIntoView();
 
             expandedArticle = newArticle;
         } else {
@@ -87,6 +86,8 @@ function createArticleElement(article) {
 
             expandedArticle = null;
         }
+
+        newArticle.scrollIntoView();
     });
 
     var articleTextContainer = document.createElement('div');
