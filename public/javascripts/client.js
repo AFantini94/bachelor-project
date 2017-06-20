@@ -60,8 +60,6 @@ function createArticleElement(article) {
     articleText.className = 'article-text';
     articleText.innerText = article.text;
 
-    newArticle.appendChild(articleText);
-
     var loadMoreBtn = document.createElement('div');
     loadMoreBtn.className = 'load-more-btn';
     loadMoreBtn.innerText = 'Show more...';
@@ -77,7 +75,13 @@ function createArticleElement(article) {
             showingMore = false;
         }
     });
-    newArticle.appendChild(loadMoreBtn);
+
+    var articleTextContainer = document.createElement('div');
+    articleTextContainer.appendChild(articleText);
+    articleTextContainer.appendChild(loadMoreBtn);
+    articleTextContainer.className = 'article-text-container';
+
+    newArticle.appendChild(articleTextContainer);
 
     var buttonsContainer = document.createElement('div');
     buttonsContainer.className = 'article-buttons-container';
