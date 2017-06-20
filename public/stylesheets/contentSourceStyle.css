@@ -9,10 +9,22 @@
     flex-basis: 300px;
     flex-grow: 1;
     margin-left: 0.5em;
+    max-height: 600px;
+}
+
+.article-text-container {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.article-text {
+    max-height: none;
 }
 
 .article-buttons-container {
     margin-top: auto;
+    flex-shrink: 0;
 }
 
 .article.expanded {
