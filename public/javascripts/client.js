@@ -272,6 +272,7 @@ function queryBuilder() {
         // console.log(phrase[0].value);
 
         var andOrGroups = document.getElementsByClassName('and-or-container');
+        var notContainers = document.getElementsByClassName('not-container');
 
         for (var i = 0; i < fields.length; i++) {
             query += fields[i].value + ':' + phrase[i].value;
@@ -280,6 +281,10 @@ function queryBuilder() {
                     query += ' AND ';
                 } else {
                     query += ' OR ';
+                }
+
+                if (notContainers[i].checked) {
+                    query += 'NOT ';
                 }
             }
             console.log(`Field n. ${i} query = "${fields[i].value}:${phrase[i].value}"`);
@@ -297,7 +302,7 @@ function queryBuilder() {
     return query;
 }
 
-function removeAndOrButtonsFromFirstFieldContainer() {
+function removeAndOrNotButtonsFromFirstFieldContainer() {
     var fieldContainers = document.getElementsByClassName('field-container');
     if (fieldContainers.length > 0) {
         var container = fieldContainers[0];
@@ -305,6 +310,11 @@ function removeAndOrButtonsFromFirstFieldContainer() {
         var andOrGroups = container.getElementsByClassName('and-or-container');
         if (andOrGroups.length > 0) {
             andOrGroups[0].parentNode.removeChild(andOrGroups[0]);
+        }
+
+        var notContainer = container.getElementsByClassName('not-container');
+        if (notContainer.length > 0) {
+            notContainer[0].parentNode.removeChild(notContainer[0]);
         }
     }
 }
@@ -321,7 +331,7 @@ function addField() {
     minusButton.appendChild(createFontAwesomeIconElement('fa-fw fa-trash'));
     minusButton.addEventListener('click', function () {
         fieldContainer.parentNode.removeChild(fieldContainer);
-        removeAndOrButtonsFromFirstFieldContainer();
+        removeAndOrNotButtonsFromFirstFieldContainer();
     });
 
     fieldContainer.className = 'field-container';
@@ -352,6 +362,22 @@ function addField() {
         });
 
         fieldContainer.appendChild(andOrContainer);
+
+        var notContainer = document.createElement('div');
+        notContainer.className = 'not-container';
+        notContainer.checked = false;
+        notContainer.addEventListener('click', function () {
+            notContainer.checked = !notContainer.checked;
+            notContainer.classList.toggle('highlight');
+        });
+
+        var notButton = document.createElement('div');
+        notButton.className = 'not-btn no-select';
+        notButton.innerText = 'NOT';
+
+        notContainer.appendChild(notButton);
+
+        fieldContainer.appendChild(notContainer);
     }
 
     styledSelectDiv.appendChild(appendFields(field));
