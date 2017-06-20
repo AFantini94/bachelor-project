@@ -14,3 +14,16 @@
 .article-buttons-container {
     margin-top: auto;
 }
+
+.article.expanded {
+    order: 1;
+    flex-basis: 100%;
+}
+
+.article:not(.expanded) {
+    order: 2;
+}
+
+.article.expanded .article-image {
+    max-width: 50%;
+}

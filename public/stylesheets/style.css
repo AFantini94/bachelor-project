@@ -55,6 +55,7 @@ a {
   max-height: none;
   overflow: auto;
 }
+
 .article-text-full:after {
   display: none;
 }
@@ -144,6 +145,8 @@ a {
 
 .no-results {
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .and-or-container {
@@ -151,7 +154,7 @@ a {
     border-radius: 2px;
     color: #00B7FF;
     display: inline-flex;
-    width: 100px;
+    width: 80px;
     justify-content: space-around;
     cursor: pointer;
 }
@@ -170,7 +173,7 @@ a {
     border-radius: 2px;
     flex-grow: 0;
     color: #00B7FF;
-    width: 50px;
+    width: 45px;
     cursor: pointer;
     margin-left: 0.5em;
 }
@@ -210,7 +213,7 @@ a {
 }
 
 .field-container:first-child {
-    margin-left: 165px;
+    margin-left: 140px;
 }
 
 .field-container {

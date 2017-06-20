@@ -13,6 +13,8 @@ function deleteAllChildNodes(root) {
     }
 }
 
+
+var expandedArticle = null;
 function createArticleElement(article) {
     console.log(article);
     var newArticle = document.createElement('div');
@@ -65,14 +67,25 @@ function createArticleElement(article) {
     loadMoreBtn.innerText = 'Show more...';
     var showingMore = false;
     loadMoreBtn.addEventListener('click', function() {
-        if (!showingMore) {
+        showingMore = !showingMore;
+        if (showingMore) {
+            if (expandedArticle !== null) {
+                expandedArticle.classList.remove('expanded');
+            }
+
+            newArticle.classList.add('expanded');
             articleText.classList.add('article-text-full');
             loadMoreBtn.innerText = 'Show less...';
-            showingMore = true;
+
+            newArticle.scrollIntoView();
+
+            expandedArticle = newArticle;
         } else {
+            newArticle.classList.remove('expanded');
             articleText.classList.remove('article-text-full');
             loadMoreBtn.innerText = 'Show more...';
-            showingMore = false;
+
+            expandedArticle = null;
         }
     });
 
