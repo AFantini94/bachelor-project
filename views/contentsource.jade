@@ -1,12 +1,55 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/libs/font-awesome-4.7.0')
+    title=title
+    link(rel='stylesheet', href='/libs/normalize-css-7.0.0/normalize.css')
+    link(rel='stylesheet', href='/libs/font-awesome-4.7.0/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/contentSourceStyle.css')
 
   body
-    script(src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js")
-    script(src="/javascripts/client.js")
-    h1= title
-    p Welcome to #{title}
+    script(src='https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js')
+    script(src='/javascripts/client.js')
+    div.login-container#login-container
+      div.token-container
+        p
+          | Get your API token at&nbsp;
+          a(href="https://newsriver.io" target="_blank" rel="noopener noreferrer") https://newsriver.io
+          | &nbsp;and paste it in the box below
+        div.token-input
+          input(type="text" placeholder="Your Newsriver API token")#token-text-input
+          button.btn(type="button")#login-btn Login
+      button.btn#logoutButton(type="button") Logout
+    div.hidden#main-content-container
+      div#search-container
+        div#query-builder-container
+          div.toggle-advanced-container
+            button.btn#show-advanced-query
+              i.fa.fa-fw.fa-edit(aria-hidden="true")
+              span Advanced query...
+          div#query-container
+          div.sort-addfield-container
+            button.btn.add(onclick='addField()')
+              i.fa.fa-fw.fa-plus(aria-hidden="true")
+              span Add field
+            div.sort-container
+              span Sort by:
+              div.styled-select
+                select#sort
+                  option(value='score') Score
+                  option(value='date') Date
+                  option(value='read') Reading time
+              div.styled-select
+                select#sortOrder
+                  option(value='desc') DESC
+                  option(value='asc') ASC
+        div.hidden#query-string-container
+          button.btn#show-simple-query
+            i.fa.fa-fw.fa-edit(aria-hidden="true")
+            span Simple query...
+          input(type="text" placeholder="Type a Lucene query string here...")#custom-query-string
+        div.search-btn-container
+          button.btn#send-query(onclick='searchNews()') Search News
+      div.hidden#loading-status-container
+        div#loading-status
+      div#articles-container
