@@ -62,33 +62,37 @@ function createArticleElement(article) {
     articleText.className = 'article-text';
     articleText.innerText = article.text;
 
-    var loadMoreBtn = document.createElement('div');
+    var loadMoreBtn = document.createElement('a');
     loadMoreBtn.className = 'load-more-btn';
     loadMoreBtn.innerText = 'Show more...';
-    var showingMore = false;
-    loadMoreBtn.addEventListener('click', function() {
-        showingMore = !showingMore;
-        if (showingMore) {
-            if (expandedArticle !== null) {
-                expandedArticle.classList.remove('expanded');
-                expandedArticle.classList.remove('article-text-full');
-            }
+    loadMoreBtn.href = article.url;
+    loadMoreBtn.target = '_blank';
+    loadMoreBtn.rel = 'noopener noreferrer';
+    // var showingMore = false;
+    // loadMoreBtn.addEventListener('click', function() {
+    //     showingMore = !showingMore;
+    //     if (showingMore) {
+    //         if (expandedArticle !== null) {
+    //             expandedArticle.classList.remove('expanded');
+    //             expandedArticle.classList.remove('article-text-full');
+    //         }
+    //
+    //         newArticle.classList.add('expanded');
+    //         articleText.classList.add('article-text-full');
+    //         loadMoreBtn.innerText = 'Show less...';
+    //
+    //         expandedArticle = newArticle;
+    //     } else {
+    //         newArticle.classList.remove('expanded');
+    //         articleText.classList.remove('article-text-full');
+    //         loadMoreBtn.innerText = 'Show more...';
+    //
+    //         expandedArticle = null;
+    //     }
+    //
+    //     newArticle.scrollIntoView();
+    // });
 
-            newArticle.classList.add('expanded');
-            articleText.classList.add('article-text-full');
-            loadMoreBtn.innerText = 'Show less...';
-
-            expandedArticle = newArticle;
-        } else {
-            newArticle.classList.remove('expanded');
-            articleText.classList.remove('article-text-full');
-            loadMoreBtn.innerText = 'Show more...';
-
-            expandedArticle = null;
-        }
-
-        newArticle.scrollIntoView();
-    });
 
     var articleTextContainer = document.createElement('div');
     articleTextContainer.appendChild(articleText);

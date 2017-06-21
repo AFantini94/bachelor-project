@@ -328,3 +328,9 @@ a {
     justify-content: flex-end;
     padding-bottom: 0.5em;
 }
+
+.article-text-container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
