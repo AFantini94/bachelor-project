@@ -187,6 +187,10 @@ a {
     border-radius: 2px;
 }
 
+.delete-field-btn {
+    margin-left: auto;
+}
+
 .highlight {
     background-color: #00B7FF;
     color: white;

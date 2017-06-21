@@ -338,10 +338,9 @@ function addField() {
     var fieldContainer = document.createElement('div');
     var styledSelectDiv = document.createElement('div');
     var field = document.createElement('select');
-    var phrase = document.createElement('input');
     var minusButton = document.createElement('button');
     minusButton.type = 'button';
-    minusButton.className = 'btn';
+    minusButton.className = 'btn delete-field-btn';
     minusButton.appendChild(createFontAwesomeIconElement('fa-fw fa-trash'));
     minusButton.addEventListener('click', function () {
         fieldContainer.parentNode.removeChild(fieldContainer);
@@ -351,6 +350,7 @@ function addField() {
     fieldContainer.className = 'field-container';
     styledSelectDiv.className = 'styled-select';
     field.className = 'field';
+    var phrase = document.createElement('input');
     phrase.className = 'phrase';
 
     phrase.placeholder = 'Phrase to search';
@@ -394,12 +394,136 @@ function addField() {
         fieldContainer.appendChild(notContainer);
     }
 
+    // add language selection
+    field.addEventListener('input', function () {
+        fieldContainer.removeChild(phrase);
+        if (field.value === 'language') {
+            var newPhrase = getLanguageSelect();
+        } else {
+            newPhrase = document.createElement('input');
+            newPhrase.className = 'phrase';
+
+            newPhrase.placeholder = 'Phrase to search';
+        }
+
+        phrase = newPhrase;
+
+        fieldContainer.insertBefore(newPhrase, minusButton);
+    });
+
     styledSelectDiv.appendChild(appendFields(field));
     fieldContainer.appendChild(styledSelectDiv);
     fieldContainer.appendChild(phrase);
     fieldContainer.appendChild(minusButton);
 
     queryContainer.appendChild(fieldContainer);
+}
+
+function getLanguageSelect() {
+    var styledSelectDiv = document.createElement('div');
+    styledSelectDiv.className = 'styled-select';
+
+    var select = document.createElement('select');
+    select.className = 'phrase';
+
+    var languagePairs = [
+        ["null", "-- Most Used --"],
+        ["EN", "English"],
+        ["ES", "Spanish"],
+        ["DE", "German"],
+        ["FR", "French"],
+        ["IT", "Italian"],
+        ["RU", "Russian"],
+        ["PT", "Portuguese"],
+        ["null", "-- All --"],
+        ["SQ", "Albanian"],
+        ["AR", "Arabic"],
+        ["HY", "Armenian"],
+        ["EU", "Basque"],
+        ["BN", "Bengali"],
+        ["BG", "Bulgarian"],
+        ["CA", "Catalan"],
+        ["KM", "Cambodian"],
+        ["ZH", "Chinese (Mandarin)"],
+        ["HR", "Croation"],
+        ["CS", "Czech"],
+        ["DA", "Danish"],
+        ["NL", "Dutch"],
+        ["EN", "English"],
+        ["ET", "Estonian"],
+        ["FJ", "Fiji"],
+        ["FI", "Finnish"],
+        ["FR", "French"],
+        ["KA", "Georgian"],
+        ["DE", "German"],
+        ["EL", "Greek"],
+        ["GU", "Gujarati"],
+        ["HE", "Hebrew"],
+        ["HI", "Hindi"],
+        ["HU", "Hungarian"],
+        ["IS", "Icelandic"],
+        ["ID", "Indonesian"],
+        ["GA", "Irish"],
+        ["IT", "Italian"],
+        ["JA", "Japanese"],
+        ["JW", "Javanese"],
+        ["KO", "Korean"],
+        ["LA", "Latin"],
+        ["LV", "Latvian"],
+        ["LT", "Lithuanian"],
+        ["MK", "Macedonian"],
+        ["MS", "Malay"],
+        ["ML", "Malayalam"],
+        ["MT", "Maltese"],
+        ["MI", "Maori"],
+        ["MR", "Marathi"],
+        ["MN", "Mongolian"],
+        ["NE", "Nepali"],
+        ["NO", "Norwegian"],
+        ["FA", "Persian"],
+        ["PL", "Polish"],
+        ["PT", "Portuguese"],
+        ["PA", "Punjabi"],
+        ["QU", "Quechua"],
+        ["RO", "Romanian"],
+        ["RU", "Russian"],
+        ["SM", "Samoan"],
+        ["SR", "Serbian"],
+        ["SK", "Slovak"],
+        ["SL", "Slovenian"],
+        ["ES", "Spanish"],
+        ["SW", "Swahili"],
+        ["SV", "Swedish "],
+        ["TA", "Tamil"],
+        ["TT", "Tatar"],
+        ["TE", "Telugu"],
+        ["TH", "Thai"],
+        ["BO", "Tibetan"],
+        ["TO", "Tonga"],
+        ["TR", "Turkish"],
+        ["UK", "Ukranian"],
+        ["UR", "Urdu"],
+        ["UZ", "Uzbek"],
+        ["VI", "Vietnamese"],
+        ["CY", "Welsh"],
+        ["XH", "Xhosa"]
+    ];
+
+    languagePairs.forEach(function (pair) {
+        var option = document.createElement('option');
+        option.value = pair[0];
+        option.text = pair[1];
+
+        if (option.value === 'null') {
+            option.disabled = true;
+        }
+
+        select.appendChild(option);
+    });
+
+    styledSelectDiv.appendChild(select);
+
+    return styledSelectDiv;
 }
 
 function appendFields(selectElement) {
@@ -429,9 +553,4 @@ function appendFields(selectElement) {
     selectElement.appendChild(languageField);
 
     return selectElement;
-}
-
-function detectInput() {
-    console.log('Hello');
-    console.log(this.value);
 }
